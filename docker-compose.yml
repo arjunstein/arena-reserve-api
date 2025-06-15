@@ -41,5 +41,14 @@ services:
       - mysql_data:/var/lib/mysql
     env_file: .env.docker
 
+  adminer:
+    image: adminer
+    container_name: arena_reserve_adminer
+    restart: always
+    ports:
+      - 8081:8080
+    depends_on:
+      - mysql
+
 volumes:
   mysql_data:
