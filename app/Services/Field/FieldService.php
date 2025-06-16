@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Services\Field;
+
+use LaravelEasyRepository\BaseService;
+
+interface FieldService extends BaseService
+{
+    public function getAllFieldsService($perPage);
+}
