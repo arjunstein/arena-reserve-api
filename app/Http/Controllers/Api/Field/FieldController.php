@@ -84,7 +84,21 @@ class FieldController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $field = $this->fieldService->getFieldByIdService($id);
+            return response()->json([
+                'status' => true,
+                'message' => 'Field retrieved successfully.',
+                'data' => new FieldResource($field),
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'An error occurred while retrieving the field.',
+                'data' => null,
+                'error' => env('APP_DEBUG') ? $e->getMessage() : null,
+            ], 404);
+        }
     }
 
     /**

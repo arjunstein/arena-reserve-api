@@ -42,4 +42,9 @@ class FieldServiceImplement extends ServiceApi implements FieldService
     {
         return $this->mainRepository->createField($data);
     }
+
+    public function getFieldByIdService(string $id)
+    {
+        return $this->mainRepository->getFieldById($id);
+    }
 }
