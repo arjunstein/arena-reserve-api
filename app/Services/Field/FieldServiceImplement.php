@@ -37,4 +37,9 @@ class FieldServiceImplement extends ServiceApi implements FieldService
 
         return $this->mainRepository->getAllFields($perPage);
     }
+
+    public function createFieldService(array $data)
+    {
+        return $this->mainRepository->createField($data);
+    }
 }

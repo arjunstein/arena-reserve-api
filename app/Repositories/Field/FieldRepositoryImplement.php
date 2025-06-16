@@ -28,4 +28,9 @@ class FieldRepositoryImplement extends Eloquent implements FieldRepository
 
         return $this->model->all();
     }
+
+    public function createField(array $data)
+    {
+        return $this->model->create($data);
+    }
 }
