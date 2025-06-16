@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('price_day', 10, 2);
             $table->decimal('price_night', 10, 2);
-            $table->enum('status', ['Ready', 'In Use']);
+            $table->enum('status', ['available', 'unavailable'])->default('available');
             $table->timestamps();
         });
     }
