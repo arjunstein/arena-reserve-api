@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Field;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Field\FieldRequest;
 use App\Http\Resources\Field\FieldResource;
 use App\Services\Field\FieldService;
 use Illuminate\Http\Request;
@@ -59,9 +60,23 @@ class FieldController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(FieldRequest $request)
     {
-        //
+        try {
+            $field = $this->fieldService->createFieldService($request->validated());
+            return response()->json([
+                'status' => true,
+                'message' => 'Field created successfully.',
+                'data' => new FieldResource($field),
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'An error occurred while creating the field.',
+                'data' => null,
+                'error' => env('APP_DEBUG') ? $e->getMessage() : null,
+            ], 500);
+        }
     }
 
     /**
@@ -69,7 +84,21 @@ class FieldController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $field = $this->fieldService->getFieldByIdService($id);
+            return response()->json([
+                'status' => true,
+                'message' => 'Field retrieved successfully.',
+                'data' => new FieldResource($field),
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'An error occurred while retrieving the field.',
+                'data' => null,
+                'error' => env('APP_DEBUG') ? $e->getMessage() : null,
+            ], 404);
+        }
     }
 
     /**
