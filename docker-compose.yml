@@ -4,6 +4,7 @@ services:
       context: .
       dockerfile: docker/php/Dockerfile
     container_name: arena_reserve_app
+    restart: always
     volumes:
       - .:/var/www
     working_dir: /var/www
@@ -18,6 +19,7 @@ services:
   nginx:
     image: nginx:latest
     container_name: arena_reserve_nginx
+    restart: always
     ports:
       - "8080:80"
     volumes:
