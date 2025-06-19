@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api\Field;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Field\FieldRequest;
+use App\Http\Requests\Field\StoreFieldRequest;
+use App\Http\Requests\Field\UpdateFieldRequest;
 use App\Http\Resources\Field\FieldResource;
 use App\Services\Field\FieldService;
 use Illuminate\Http\Request;
@@ -60,7 +61,7 @@ class FieldController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(FieldRequest $request)
+    public function store(StoreFieldRequest $request)
     {
         try {
             $field = $this->fieldService->createFieldService($request->validated());
@@ -112,9 +113,23 @@ class FieldController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateFieldRequest $request, string $id)
     {
-        //
+        try {
+            $field = $this->fieldService->updateFieldService($id, $request->validated());
+            return response()->json([
+                'status' => true,
+                'message' => 'Field updated successfully.',
+                'data' => new FieldResource($field),
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'An error occurred while updating the field.',
+                'data' => null,
+                'error' => env('APP_DEBUG') ? $e->getMessage() : null,
+            ], 500);
+        }
     }
 
     /**
@@ -122,6 +137,19 @@ class FieldController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $this->fieldService->deleteFieldService($id);
+            return response()->json([
+                'status' => true,
+                'message' => 'Field deleted successfully.',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'An error occurred while deleting the field.',
+                'data' => null,
+                'error' => env('APP_DEBUG') ? $e->getMessage() : null,
+            ], 500);
+        }
     }
 }

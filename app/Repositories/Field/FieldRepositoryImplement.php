@@ -38,4 +38,18 @@ class FieldRepositoryImplement extends Eloquent implements FieldRepository
     {
         return $this->model->findOrFail($id);
     }
+
+    public function updateField($id, array $data)
+    {
+        $field = $this->getFieldById($id);
+        $field->update($data);
+        return $field;
+    }
+
+    public function deleteField($id)
+    {
+        $field = $this->getFieldById($id);
+        $field->delete();
+        return $field;
+    }
 }
