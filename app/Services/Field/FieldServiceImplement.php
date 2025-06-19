@@ -47,4 +47,14 @@ class FieldServiceImplement extends ServiceApi implements FieldService
     {
         return $this->mainRepository->getFieldById($id);
     }
+
+    public function updateFieldService(string $id, array $data)
+    {
+        return $this->mainRepository->updateField($id, $data);
+    }
+
+    public function deleteFieldService(string $id)
+    {
+        return $this->mainRepository->deleteField($id);
+    }
 }

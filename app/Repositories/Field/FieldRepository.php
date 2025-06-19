@@ -10,4 +10,6 @@ interface FieldRepository extends Repository
     public function getAllFields($perPage = null);
     public function createField(array $data);
     public function getFieldById($id);
+    public function updateField($id, array $data);
+    public function deleteField($id);
 }
