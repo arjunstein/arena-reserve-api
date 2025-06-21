@@ -8,7 +8,18 @@ use App\Http\Requests\Field\UpdateFieldRequest;
 use App\Http\Resources\Field\FieldResource;
 use App\Services\Field\FieldService;
 use Illuminate\Http\Request;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Info(
+ *     title="Arena Reserve API",
+ *     version="1.0.0"
+ * )
+ *
+ * @OA\Tag(
+ *     name="Fields"
+ * )
+ */
 class FieldController extends Controller
 {
     protected $fieldRepository;
@@ -17,8 +28,22 @@ class FieldController extends Controller
     {
         $this->fieldService = $fieldService;
     }
+
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/fields",
+     *     tags={"Fields"},
+     *     summary="Get list of all fields",
+     *     @OA\Parameter(
+     *         name="per_page",
+     *         in="query",
+     *         description="Number of items per page",
+     *         required=false,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response=200, description="Successful response"),
+     *     @OA\Response(response=500, description="Server error")
+     * )
      */
     public function index(Request $request)
     {
@@ -51,15 +76,24 @@ class FieldController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/api/fields",
+     *     tags={"Fields"},
+     *     summary="Create a new field",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"field_name", "price_day", "price_night", "status"},
+     *             @OA\Property(property="field_name", type="string"),
+     *             @OA\Property(property="description", type="string"),
+     *             @OA\Property(property="price_day", type="number", format="float"),
+     *             @OA\Property(property="price_night", type="number", format="float"),
+     *             @OA\Property(property="status", type="string", enum={"available", "unavailable"})
+     *         )
+     *     ),
+     *     @OA\Response(response=201, description="Field created successfully"),
+     *     @OA\Response(response=500, description="Server error")
+     * )
      */
     public function store(StoreFieldRequest $request)
     {
@@ -81,7 +115,20 @@ class FieldController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/fields/{id}",
+     *     tags={"Fields"},
+     *     summary="Get field by ID",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="UUID of the field",
+     *         required=true,
+     *         @OA\Schema(type="string", format="uuid")
+     *     ),
+     *     @OA\Response(response=200, description="Field found"),
+     *     @OA\Response(response=404, description="Field not found")
+     * )
      */
     public function show(string $id)
     {
@@ -103,15 +150,31 @@ class FieldController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/api/fields/{id}",
+     *     tags={"Fields"},
+     *     summary="Update field by ID",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="UUID of the field",
+     *         required=true,
+     *         @OA\Schema(type="string", format="uuid")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"field_name", "price_day", "price_night", "status"},
+     *             @OA\Property(property="field_name", type="string"),
+     *             @OA\Property(property="description", type="string"),
+     *             @OA\Property(property="price_day", type="number", format="float"),
+     *             @OA\Property(property="price_night", type="number", format="float"),
+     *             @OA\Property(property="status", type="string", enum={"available", "unavailable"})
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Field updated"),
+     *     @OA\Response(response=500, description="Server error")
+     * )
      */
     public function update(UpdateFieldRequest $request, string $id)
     {
@@ -133,7 +196,20 @@ class FieldController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/fields/{id}",
+     *     tags={"Fields"},
+     *     summary="Delete field by ID",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="UUID of the field",
+     *         required=true,
+     *         @OA\Schema(type="string", format="uuid")
+     *     ),
+     *     @OA\Response(response=200, description="Field deleted"),
+     *     @OA\Response(response=500, description="Server error")
+     * )
      */
     public function destroy(string $id)
     {
