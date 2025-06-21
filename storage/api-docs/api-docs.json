@@ -1,0 +1,218 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Arena Reserve API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/fields": {
+            "get": {
+                "tags": [
+                    "Fields"
+                ],
+                "summary": "Get list of all fields",
+                "operationId": "23d28311ea27baf17dec96ddac3e81b7",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Fields"
+                ],
+                "summary": "Create a new field",
+                "operationId": "26c94cfc4122d38d59c2e45e3b658ff9",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "field_name",
+                                    "price_day",
+                                    "price_night",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "field_name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "price_day": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "price_night": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "available",
+                                            "unavailable"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Field created successfully"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/fields/{id}": {
+            "get": {
+                "tags": [
+                    "Fields"
+                ],
+                "summary": "Get field by ID",
+                "operationId": "38e4136b95c6574be8ee1b554e719014",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID of the field",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Field found"
+                    },
+                    "404": {
+                        "description": "Field not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Fields"
+                ],
+                "summary": "Update field by ID",
+                "operationId": "2fa772def83a3453ce6374486e5663c8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID of the field",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "field_name",
+                                    "price_day",
+                                    "price_night",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "field_name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "price_day": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "price_night": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "available",
+                                            "unavailable"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Field updated"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Fields"
+                ],
+                "summary": "Delete field by ID",
+                "operationId": "71fd178ad906aa0520e5fceaf26a7b24",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "UUID of the field",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Field deleted"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Fields"
+        }
+    ]
+}
